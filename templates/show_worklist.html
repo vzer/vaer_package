@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="row-fluid">
+        <div class="col-md-offset-8">
+           <form class="form-horizontal" action="{{ url_for("show_worklist") }}" method="post" role="form" >
+                <div class="form-group">
+                    <div class="col-md-8"><input  type="text" name="searchname" class="form-control" placeholder="查找模块名" ></div>
+                    <div class="col-md-4"><button type="submit"  class="btn btn-primary form-control" >查找</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% for entry in entries %}
+        <article>
+            <div class="heading"><h2 class="title" style="text-transform:none;" ><a href="{{ url_for("viewWorkOrder",workOrder=entry.id) }}">单号：{{ entry.id |safe }}</a></h2></div>
+                <div class="content">
+                    <p>环境：{{ entry.deploytype }} ------- 类型：{{entry.family}}</p>
+                    <p>模块：{{entry.models}} ------- 版本：{{entry.version}}</p>
+                    {% if entry.status =="SUCCESS" %}
+                        <div class="text-success"><p>状态：{{entry.status}}</p></div>
+                    {% elif entry.status=="FAILURE" %}
+                        <div class="text-error"><p>状态：{{entry.status}}</p></div>
+                    {% else %}
+                        <div class="text-info"><p>状态：{{entry.status}}</p></div>
+                    {% endif %}
+                </div>
+                <div class="extra">
+
+                    <div class="info">
+                        By {{ entry.user_id }} on {{ entry.logtime }}
+                    </div>
+                    <div class="more"><a class="button" href="{{ url_for("viewWorkOrder",workOrder=entry.id) }}">Read more >></a></div>
+                    <div class="clear"></div>
+                </div>
+        </article>
+    {% endfor %}
+
+    {% if searchname!=None %}
+        <ul class="pagination pagination-lg pagination-centered">
+            {% if p.has_prev %}
+                <li><a href="{{ url_for('show_worklist', page=p.prev_num,searchname=searchname) }}" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+            {% endif %}
+            {% for i in pagination %}
+                {% if i == page %}
+                    <li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
+                {% else %}
+                    <li><a href="{{ url_for("show_worklist",page=i,searchname=searchname) }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if p.has_next %}
+                <li><a href="{{ url_for('show_worklist', page=p.next_num,searchname=searchname) }}" aria-hidden="next"><span aria-hidden="true">下一页</span></a></li>
+            {% endif %}
+        </ul>
+    {% else %}
+        <ul class="pagination pagination-lg pagination-centered">
+            {% if p.has_prev %}
+                <li><a href="{{ url_for('show_worklist', page=p.prev_num) }}" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+            {% endif %}
+            {% for i in pagination %}
+                {% if i == page %}
+                    <li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
+                {% else %}
+                    <li><a href="{{ url_for("show_worklist",page=i) }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if p.has_next %}
+                <li><a href="{{ url_for('show_worklist', page=p.next_num) }}" aria-hidden="next"><span aria-hidden="true">下一页</span></a></li>
+            {% endif %}
+       </ul>
+    {% endif %}
+{% endblock %}

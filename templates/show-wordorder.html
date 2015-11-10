@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="align-left" >
+            {% if logList!=None %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">任务单号</h3>
+                    </div>
+                        <h5 class="panel-body text-center" >{{logList.id}}</h5>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">发布信息</h3>
+                    </div>
+                    <div class="panel-body text-left">
+                        <p>发布时间：{{logList.logtime}}</p>
+                        <p>发布用户：{{logList.user_id}}</p>
+                        <p>发布类型：{{logList.family}}</p>
+                        <p>发布模块：{{logList.models}}</p>
+                        <p>发布版本：{{logList.version}}</p>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">当前状态</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h3>{{logList.status}}</h3>
+                        <h5>步骤失败总次数：{{logList.failure_times}}</h5>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">LOG内容</h3>
+                    </div>
+                    <div class="panel-body text-left">
+                        {% if logList.context==None %}
+                            <pre> 日志为空</pre>
+                        {% else %}
+                            <pre>{{logList.context}}</pre>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-left">请检查单号</h3>
+                    </div>
+                    <div class="panel-body text-left">
+                        <h4>当前单号不存在</h4>
+                    </div>
+                </div>
+            {% endif %}
+        <hr>
+    </div>
+{% endblock %}

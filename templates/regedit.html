@@ -1,0 +1,58 @@
+{% extends"layout.html" %}
+{% block body %}
+    {% if form.errors %}
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+                <div class="list-group" contenteditable="true">
+                {% for field_name,field_errors in form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <div class="list-group-item col-xs-11">{{ form[field_name].label }}:{{ error }}</div>
+                    {% endfor %}
+                {% endfor %}
+                </div>
+        </div>
+    {% endif %}
+    <form class="form-horizontal panel-body" action="{{ url_for("regedit") }}" method="post" role="form">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">欢迎注册</h3>
+                        </div>
+                        <div class="row  panel-body">
+                            <div class="form-group">
+                                {{ form.hidden_tag() }}
+                                {{ form.nick_name.label(class="col-sm-3 control-label") }}
+                                <div class="col-xs-4">
+                                    {{ form.nick_name( class="form-control",required="required",placeholder="请输入姓名！") }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form.username.label(class="col-sm-3 control-label") }}
+                                <div class="col-xs-4">
+                                    {{ form.username( class="form-control", required="required",placeholder="请输入账户名！") }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form.email.label(class="col-sm-3 control-label") }}
+                                <div class="col-xs-4">
+                                    {{ form.email(class="form-control",required="required",placeholder="请输入邮箱地址！") }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form.password.label(class="col-sm-3 control-label") }}
+                                <div class="col-xs-4">
+                                    {{ form.password(class="form-control",required="required",placeholder="请输入登录密码！") }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form.confirm.label(class="col-sm-3 control-label") }}
+                                <div class="col-xs-4">
+                                    {{ form.confirm(class="form-control",required="required",placeholder="请输入确认密码！") }}
+                                </div>
+                            </div>
+                            <div class="text-center col-lg-offset-1">
+                                <button type="submit" class="btn btn-primary btn-lg col-xs-7">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+{% endblock %}

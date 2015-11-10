@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <title>犀牛网络发布平台</title>
+	<!--  Page Needs -->
+	<meta charset="utf-8">
+    {% block head %}
+    {% endblock %}
+
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="baidu-site-verification" content="iMjzOClF2L" />
+    <meta property="wb:webmaster" content="d07ab237c0e07028" />
+    <!-- BootStrap -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="/static/css/zerogrid.css">
+	<link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/responsive.css">
+    <link href="/static/css/common.css" rel="stylesheet">
+    <link href="/static/css/application.css" rel="stylesheet">
+	<script type="text/javascript" src="/static/js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery-ui"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+    <link href='/static/images/favicon.ico' rel='icon' type='image/x-icon'/>
+
+    <!--[if lt IE 8]>
+       <div style=' clear: both; text-align:center; position: relative;'>
+         <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+           <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
+        </a>
+      </div>
+    <![endif]-->
+    <!--[if lt IE 9]>
+		<script src="/static/js/html5.js"></script>
+		<script src="/static/js/css3-mediaqueries.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="wrap-body">
+	<!-- Header -->
+	<header>
+		<div class="wrap-header zerogrid">
+			<div id="logo"><a href="{{ url_for('index') }}"><img src="/static/images/xiniu.png"/></a></div>
+			<nav>
+				<div class="wrap-nav ">
+					<div class="menu">
+						<ul>
+                            {% if g.user.is_authenticated() %}
+							    <li><a href="{{ url_for('logout') }}">登出</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('login') }}">登录</a></li>
+                                <li><a href="{{ url_for('regedit') }}">注册</a></li>
+                            {% endif %}
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+<!-- Content -->
+<section id="content">
+	<div class="wrap-content zerogrid">
+		<div class="row block">
+			<div id="main-content" class="col-3-4">
+				<div class="row">
+					<div class="col-full">
+						<div class="wrap-col">
+                           {% for message in get_flashed_messages() %}
+                            <div class="alert alert-success">
+				 				<button type="button" class="close" data-dismiss="alert">×</button>
+                                {{ message }}
+			                </div>
+                            {% endfor %}
+                            {% block body %} {% endblock %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="sidebar" class="col-1-4">
+				<div class="wrap-col">
+					<div class="box">
+                        {% if g.user.is_authenticated() %}
+						<div class="heading"><h4 class="title text-center">当前用户：{{g.user.nick_name }}</h4></div>
+                        {% else %}
+                        <div class="heading"><h4 class="title text-center">请登录！</h4></div>
+                        {% endif %}
+						<div class="content">
+							<div class="connect">
+                                <div class="thumbnail">
+                                    <img src="/static/images/myhead.png" alt="'">
+                                    <div class="caption">
+                                       <ul>
+						                	<li><a href="{{ url_for('index') }}">首页</a></li>
+						                	<li><a href="{{ url_for('add',deployType="xiniu") }}">发布犀牛</a></li>
+							                <li><a href="{{ url_for('add',deployType="platform") }}">发布平台</a></li>
+							                <li><a href="{{ url_for('add',deployType="pos") }}">发布pos</a></li>
+							                <li><a href="{{ url_for('add',deployType="dfl") }}">发布大发</a></li>
+							                <li><a href="{{ url_for('add',deployType="harson") }}">发布harson</a></li>
+							                <li><a href="{{ url_for('show_worklist') }}">查看工单</a></li>
+							                <li><a href="{{ url_for("statis") }}">发布统计</a></li>
+						                </ul>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</section>
+
+<!-- Footer -->
+<footer>
+	<div class="wrap-footer zerogrid">
+		<div class="row">
+			<div class="col-1-3">
+				<div class="wrap-col">
+					<div class="box">
+						<div class="heading"><h4 class="title">联系信息</h4></div>
+						<div class="content gallery">
+                            <p>website: <a href="www.xiniunet.com">公司网址</a></p>
+                            <p>E-mail: zhangcunlei@xiniunet.com</p>
+                            <p></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-1-3">
+				<div class="wrap-col">
+					<div class="box">
+						<div class="heading"><h4 class="title">About Us</h4></div>
+						<div class="content">
+                            <p>犀牛网络配置管理</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-1-3 ">
+				<div class="wrap-col">
+					<div class="box">
+						<div class="heading"><h4 class="title">内部链接</h4></div>
+						<div class="content">
+                            <p><a href="http://gitlab.xiniunet.com">项目gitlab</a></p>
+                            <p><a href="http://gitlab2.xiniunet.com">平台gitlab</a></p>
+                            <p><a href="http://gitlab3.xiniunet.com">孵化器gitlab</a></p>
+                            <p><a href="http://gitlab4.xiniunet.com">产品gitlab</a></p>
+                            <p><a href="http://gitlab5.xiniunet.com">中恒gitlab</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">
+        <p>Copyright © 2014 - 2015</p>
+	</div>
+</footer>
+</div>
+</body>
+</html>

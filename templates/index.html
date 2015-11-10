@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">欢迎使用</h3>
+                        </div>
+                        <div class="panel-body text-left">
+                            <p>总发布量：{{ totlelogs }}</p>
+                            <p>当天发布量：{{ todaylogscount }}</p>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <caption class="text-center">详细信息</caption>
+                                        <thead>
+                                            <tr>
+                                                <th>环境</th>
+                                                <th>模块</th>
+                                                <th>版本</th>
+                                                <th>类别</th>
+                                                <th>时间</th>
+                                                <th>状态</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for log in todaylogslist %}
+                                              <tr class="active {{ loop.cycle("success","error","warning","info") }} ">
+                                                 <td>{{ log.deploytype }}</td>
+                                                 <td>{{ log.models }}</td>
+                                                 <td>{{ log.version }}</td>
+                                                 <td>{{ log.family }}</td>
+                                                 <td>{{ log.logtime}}</td>
+                                                 <td>{{ log.status }}</td>
+                                              </tr>
+                                            {% endfor %}
+                                           </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                        </div>
+    </div>
+{% endblock %}

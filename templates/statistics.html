@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="tabbable" id="tabs-59497">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#panel-1" data-toggle="tab" contenteditable="true">按时间统计</a></li>
+            <li class=""><a href="#panel-3" data-toggle="tab" contenteditable="true">最新版本</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="panel-1" contenteditable="true">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">本周发布量</h3>
+                    </div>
+                    <div class="panel-body text-left">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <caption class="text-center">本周发布总量：{{ thisweektotal }}</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>环境</th>
+                                            <th>模块</th>
+                                            <th>数量</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for log in thisweeklist %}
+                                            <tr class="active {{ loop.cycle("success","error","warning","info") }} ">
+                                                <td>{{ log.deploytype }}</td>
+                                                <td>{{ log.models }}</td>
+                                                <td>{{ log.count }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                <table class="table table-striped table-bordered table-hover">
+                                    <caption class="text-center">上周发布总量：{{ lastweektotal }}</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>环境</th>
+                                            <th>模块</th>
+                                            <th>数量</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for log in lastweeklist %}
+                                            <tr class="active {{ loop.cycle("success","error","warning","info") }} ">
+                                                <td>{{ log.deploytype }}</td>
+                                                <td>{{ log.models }}</td>
+                                                <td>{{ log.count }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="panel-3" contenteditable="true">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">最新版本</h3>
+                    </div>
+                    <div class="panel-body text-left">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <caption class="text-center">截至到{{ current_datetime }}最新版本</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>发布环境</th>
+                                            <th>应用类别</th>
+                                            <th>应用模块</th>
+                                            <th>应用版本</th>
+                                            <th>发布日期</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for log in current_version %}
+                                            <tr class="active {{ loop.cycle("success","error","warning","info") }} ">
+                                                <td>{{ log.deploytype }}</td>
+                                                <td>{{ log.family }}</td>
+                                                <td>{{ log.models }}</td>
+                                                <td>{{ log.version }}</td>
+                                                <td>{{ log.logtime }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
